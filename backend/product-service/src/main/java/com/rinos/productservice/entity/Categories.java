@@ -19,6 +19,6 @@ public class Categories {
     private String name;
     private String description;
     private String status;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 }

@@ -19,8 +19,8 @@ public class Products {
     private String description;
     private double price;
     private String brand;
-    private int category_id;
+    private int categoryId;
     private String Status;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 }
