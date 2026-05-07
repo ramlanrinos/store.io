@@ -7,13 +7,13 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-//@Table(name = "products")
+@Table(name = "products")
 @Getter
 @Setter
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
     private String description;
