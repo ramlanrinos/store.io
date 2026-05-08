@@ -31,10 +31,10 @@ public class ProductController {
         return productService.createProduct(productDTO);
     }
 
-//    @PutMapping("/{id}")
-//    public Product updateProduct(@PathVariable long id, @RequestBody Product product) {
-//        return productService.updateProduct(id, product);
-//    }
+    @PutMapping("/{id}")
+    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO productDTO) {
+        return productService.updateProduct(id, productDTO);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable long id) {
