@@ -4,6 +4,7 @@ import com.rinos.productservice.dto.ProductDTO;
 import com.rinos.productservice.entity.Product;
 import com.rinos.productservice.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO createProduct(@Valid @RequestBody ProductDTO productDTO) {
         return productService.createProduct(productDTO);
     }
@@ -38,6 +40,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
     }
