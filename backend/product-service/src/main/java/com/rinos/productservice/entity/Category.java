@@ -1,16 +1,16 @@
 package com.rinos.productservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "categories")
-@Getter
-@Setter
-public class Categories {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

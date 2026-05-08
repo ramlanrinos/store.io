@@ -1,7 +1,9 @@
 package com.rinos.productservice.repository;
 
-import com.rinos.productservice.entity.ProductImages;
+import com.rinos.productservice.entity.ProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductImageRepository extends JpaRepository<ProductImages, Long> {
+@Repository
+public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
 }
