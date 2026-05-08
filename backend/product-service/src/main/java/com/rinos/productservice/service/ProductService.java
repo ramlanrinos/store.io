@@ -1,6 +1,6 @@
 package com.rinos.productservice.service;
 
-import com.rinos.productservice.dto.ProductCreateDTO;
+import com.rinos.productservice.dto.ProductDTO;
 import com.rinos.productservice.entity.Product;
 import com.rinos.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class ProductService {
         return productRepository.findById(id).get();
     }
 
-    public ProductCreateDTO createProduct(ProductCreateDTO productDTO) {
+    public ProductDTO createProduct(ProductDTO productDTO) {
         // Convert DTO to Entity
         Product product = new Product();
         product.setName(productDTO.getName());
@@ -39,8 +39,8 @@ public class ProductService {
         return convertToCreateDto(savedProduct);
     }
 
-    private ProductCreateDTO convertToCreateDto(Product product) {
-        ProductCreateDTO productDTO = new ProductCreateDTO();
+    private ProductDTO convertToCreateDto(Product product) {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());

@@ -1,6 +1,6 @@
 package com.rinos.productservice.controller;
 
-import com.rinos.productservice.dto.ProductCreateDTO;
+import com.rinos.productservice.dto.ProductDTO;
 import com.rinos.productservice.entity.Product;
 import com.rinos.productservice.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductCreateDTO createProduct(@RequestBody ProductCreateDTO productDTO) {
+    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
         return productService.createProduct(productDTO);
     }
 
