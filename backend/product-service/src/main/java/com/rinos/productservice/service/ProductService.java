@@ -2,6 +2,7 @@ package com.rinos.productservice.service;
 
 import com.rinos.productservice.dto.ProductDTO;
 import com.rinos.productservice.entity.Product;
+import com.rinos.productservice.exception.ProductNotFoundException;
 import com.rinos.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class ProductService {
     }
 
     public Product getProductById(long id) {
-        return productRepository.findById(id).get();
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
     }
 
     public ProductDTO createProduct(ProductDTO productDTO) {
@@ -42,7 +44,8 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(long id, ProductDTO productDTO) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
 
         if (productDTO.getName() != null) {
             product.setName(productDTO.getName());
@@ -81,6 +84,8 @@ public class ProductService {
     }
 
     public void deleteProduct(long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
+        productRepository.delete(product);
     }
 }

@@ -3,6 +3,7 @@ package com.rinos.productservice.controller;
 import com.rinos.productservice.dto.ProductDTO;
 import com.rinos.productservice.entity.Product;
 import com.rinos.productservice.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
+    public ProductDTO createProduct(@Valid @RequestBody ProductDTO productDTO) {
         return productService.createProduct(productDTO);
     }
 
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO productDTO) {
+    public ProductDTO updateProduct(@PathVariable long id,@Valid @RequestBody ProductDTO productDTO) {
         return productService.updateProduct(id, productDTO);
     }
 
