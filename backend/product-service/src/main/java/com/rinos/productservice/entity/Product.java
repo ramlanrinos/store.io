@@ -1,16 +1,18 @@
 package com.rinos.productservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "products")
-@Getter
-@Setter
-public class Products {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,7 +22,12 @@ public class Products {
     private double price;
     private String brand;
     private int categoryId;
-    private String Status;
+    private String status;
+
+    @CreationTimestamp  // Auto-sets on create
+    @Column(updatable = false)  // Never update after creation
     private Date createdAt;
+
+    @UpdateTimestamp  // Auto-sets on create & update
     private Date updatedAt;
 }
