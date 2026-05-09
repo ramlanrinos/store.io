@@ -2,8 +2,12 @@ package com.rinos.productservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -19,6 +23,14 @@ public class Category {
     private String name;
     private String description;
     private String status;
-    private Date createdAt;
-    private Date updatedAt;
+
+    @OneToMany(mappedBy = "category")   // The Product entity owns category relationship.
+    private List<Product> products = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

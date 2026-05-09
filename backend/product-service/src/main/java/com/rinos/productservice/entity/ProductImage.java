@@ -3,7 +3,7 @@ package com.rinos.productservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product_images")
@@ -15,8 +15,12 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     private String imageURL;
     private boolean isMain;
-    private Date createdAt;
+
+    private LocalDateTime createdAt;
 }

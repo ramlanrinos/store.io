@@ -5,7 +5,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -21,13 +23,24 @@ public class Product {
     private String description;
     private double price;
     private String brand;
-    private int categoryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)  // Many products belong to one category
+    @JoinColumn(name = "category_id")
+    private Category category;  // Each product stores ONE category object.
+
     private String status;
+
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,  // If product is saved, its images can also be saved. If product is deleted, images are also deleted.
+            orphanRemoval = true    // If an image is removed from product image list, that image row will also be removed from database.
+    )
+    private List<ProductImage> images = new ArrayList<>();
 
     @CreationTimestamp  // Auto-sets on create
     @Column(updatable = false)  // Never update after creation
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp  // Auto-sets on create & update
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 }
