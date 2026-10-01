@@ -68,8 +68,8 @@ store.io/
 
 - [x] **Phase 1: Requirements Analysis**
 - [x] **Phase 2: Architecture Design**
-- [ ] **Phase 3: Database Design** (Current)
-- [ ] **Phase 4: Backend Development**
+- [x] **Phase 3: Database Design**
+- [ ] **Phase 4: Backend Development** (Current)
 - [ ] **Phase 5: Postman Testing**
 - [ ] **Phase 6: Node.js BFF**
 - [ ] **Phase 7: React Frontend**
@@ -83,4 +83,5 @@ store.io/
 Detailed project specifications are maintained in the [`docs/`](file:///run/media/rinos/Data/store.io/docs) directory:
 * [`docs/requirements.md`](file:///run/media/rinos/Data/store.io/docs/requirements.md): System Functional & Non-Functional Requirements.
 * [`docs/architecture.md`](file:///run/media/rinos/Data/store.io/docs/architecture.md): System Architecture, JWT propagation, and Checkout Saga sequence.
+* [`docs/database-design.md`](file:///run/media/rinos/Data/store.io/docs/database-design.md): Normalized Database-per-Service ER models & SQL indexing rules.
 * [`docs/progress-log.md`](file:///run/media/rinos/Data/store.io/docs/progress-log.md): Implementation step-by-step progress tracking.
