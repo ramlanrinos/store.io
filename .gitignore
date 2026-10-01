@@ -1,0 +1,30 @@
+# ==========================================
+# store.io Git Ignore Configuration
+# ==========================================
+
+# Target / Build Output Directories
+**/target/
+**/build/
+**/dist/
+**/node_modules/
+
+# Local Environment & Secrets (NEVER COMMIT TO GIT)
+**/.env
+**/.env.local
+**/application-local.yml
+**/application-local.properties
+**/application-dev-secret.yml
+
+# IDE & Editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs & Temporary files
+*.log
+**/logs/
+**/tmp/
+**/temp/
