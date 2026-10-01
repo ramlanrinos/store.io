@@ -6,6 +6,15 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 
 ## 📅 Log Entries
 
+### [2026-10-01] — Phase 2: Architecture Design Completed
+- **Status:** Completed
+- **Deliverables:**
+  - Created System Architecture document in [`docs/architecture.md`](file:///run/media/rinos/Data/store.io/docs/architecture.md).
+  - Modeled System Topology (React $\rightarrow$ Node.js BFF $\rightarrow$ 6 Spring Boot Services $\rightarrow$ MySQL DB per service).
+  - Modeled Security & Authentication Architecture (Stateless JWT token issuance, verification, header enrichment `X-User-Id`, `X-User-Roles`).
+  - Designed Orchestrated Saga pattern for Checkout transaction flow (Cart $\rightarrow$ Order $\rightarrow$ Inventory Reserve $\rightarrow$ Payment $\rightarrow$ Stock Release on failure).
+  - Established API error response standard (RFC 7807 Problem Details).
+
 ### [2026-10-01] — Phase 1: Requirements Analysis Completed
 - **Status:** Completed
 - **Deliverables:**
@@ -22,8 +31,8 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 | Phase | Description | Status |
 |---|---|---|
 | **Phase 1** | Requirements Analysis | 🟢 Completed |
-| **Phase 2** | Architecture Design | 🟡 Next Up |
-| **Phase 3** | Database Design | ⚪ Pending |
+| **Phase 2** | Architecture Design | 🟢 Completed |
+| **Phase 3** | Database Design | 🟡 Next Up |
 | **Phase 4** | Backend Development | ⚪ Pending |
 | **Phase 5** | Postman Testing | ⚪ Pending |
 | **Phase 6** | Node.js BFF | ⚪ Pending |
