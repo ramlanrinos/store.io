@@ -6,6 +6,22 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 
 ## 📅 Log Entries
 
+### [2026-10-01] — Phase 4: Backend Development (user-service) Completed
+- **Status:** Completed
+- **Deliverables:**
+  - Implemented initial Spring Boot microservice at [`backend/user-service`](file:///run/media/rinos/Data/store.io/backend/user-service).
+  - Configured Maven build (`pom.xml`, Spring Boot 3.2.3, Java 21, Spring Security, Spring Data JPA, JJWT 0.12.5).
+  - Created JPA entities (`User`, `Role`) and repositories (`UserRepository`, `RoleRepository`).
+  - Implemented BCrypt password hashing (`PasswordEncoderConfig`).
+  - Implemented JWT Token Provider (`JwtTokenProvider`) for HMAC SHA-256 signed stateless tokens.
+  - Implemented REST API Endpoints:
+    - `POST /users/register` — User registration with role assignment & email uniqueness check.
+    - `POST /users/login` — Authentication returning signed JWT token & user claims.
+    - `GET /users/profile` — User profile retrieval via token or `X-User-Id` header.
+    - `GET /users/validate` — Token validation endpoint for BFF and microservice communication.
+  - Added RFC 7807 problem details global exception handling (`GlobalExceptionHandler`).
+  - Verified 100% build & unit test pass rate (`AuthServiceTest`, `UserServiceApplicationTests`).
+
 ### [2026-10-01] — Phase 3: Database Design Completed
 - **Status:** Completed
 - **Deliverables:**
@@ -42,7 +58,7 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 | **Phase 1** | Requirements Analysis | 🟢 Completed |
 | **Phase 2** | Architecture Design | 🟢 Completed |
 | **Phase 3** | Database Design | 🟢 Completed |
-| **Phase 4** | Backend Development | 🟡 Next Up |
+| **Phase 4** | Backend Development | 🟢 `user-service` Completed / Remaining Services Pending |
 | **Phase 5** | Postman Testing | ⚪ Pending |
 | **Phase 6** | Node.js BFF | ⚪ Pending |
 | **Phase 7** | React Frontend | ⚪ Pending |
