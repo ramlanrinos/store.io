@@ -6,20 +6,27 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 
 ## 📅 Log Entries
 
-### [2026-10-01] — Phase 4: Backend Development (user-service) Completed
+### [2026-10-01] — Phase 4 Step 2: Backend Development (product-service) Completed
 - **Status:** Completed
 - **Deliverables:**
-  - Implemented initial Spring Boot microservice at [`backend/user-service`](file:///run/media/rinos/Data/store.io/backend/user-service).
-  - Configured Maven build (`pom.xml`, Spring Boot 3.2.3, Java 21, Spring Security, Spring Data JPA, JJWT 0.12.5).
-  - Created JPA entities (`User`, `Role`) and repositories (`UserRepository`, `RoleRepository`).
-  - Implemented BCrypt password hashing (`PasswordEncoderConfig`).
-  - Implemented JWT Token Provider (`JwtTokenProvider`) for HMAC SHA-256 signed stateless tokens.
-  - Implemented REST API Endpoints:
-    - `POST /users/register` — User registration with role assignment & email uniqueness check.
-    - `POST /users/login` — Authentication returning signed JWT token & user claims.
-    - `GET /users/profile` — User profile retrieval via token or `X-User-Id` header.
-    - `GET /users/validate` — Token validation endpoint for BFF and microservice communication.
-  - Added RFC 7807 problem details global exception handling (`GlobalExceptionHandler`).
+  - Implemented Product Catalog Microservice at [`backend/product-service`](file:///run/media/rinos/Data/store.io/backend/product-service).
+  - Configured Spring Boot 3.2.3 + Java 21 on port `8082`, connecting to `product_db`.
+  - Created JPA entities (`Category`, `Product`) with high-performance B-tree indexing on `sku` and `category_id`.
+  - Implemented REST APIs:
+    - `GET /categories` & `POST /categories` — Category catalog management.
+    - `GET /products` — Paginated product catalog listing with category filtering and keyword search.
+    - `GET /products/{id}` — Detailed product resolution.
+    - `POST /products/batch` — High-speed batch product resolution endpoint for BFF and Cart Service.
+    - `POST /products`, `PUT /products/{id}`, `DELETE /products/{id}` — Admin catalog management (soft delete).
+  - Added RFC 7807 global exception handling (`GlobalExceptionHandler`).
+  - Verified 100% build & unit test pass rate (`ProductServiceTest`, `ProductServiceApplicationTests`).
+
+### [2026-10-01] — Phase 4 Step 1: Backend Development (user-service) Completed
+- **Status:** Completed
+- **Deliverables:**
+  - Implemented User & Auth Microservice at [`backend/user-service`](file:///run/media/rinos/Data/store.io/backend/user-service).
+  - Configured Spring Boot 3.2.3 + Java 21, Spring Security, BCrypt, and JJWT 0.12.5.
+  - Implemented JWT authentication and profile endpoints (`POST /users/register`, `POST /users/login`, `GET /users/profile`, `GET /users/validate`).
   - Verified 100% build & unit test pass rate (`AuthServiceTest`, `UserServiceApplicationTests`).
 
 ### [2026-10-01] — Phase 3: Database Design Completed
@@ -27,27 +34,17 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 - **Deliverables:**
   - Created Database Design specification in [`docs/database-design.md`](file:///run/media/rinos/Data/store.io/docs/database-design.md).
   - Designed ER diagrams & table schemas for all 6 service databases (`user_db`, `product_db`, `inventory_db`, `cart_db`, `order_db`, `payment_db`).
-  - Incorporated optimistic locking columns (`version` in `inventory_db`) to handle concurrent flash-sale stock deductions cleanly.
-  - Enforced financial snapshotting (`price_snapshot` in `order_items`) to lock prices at checkout.
-  - Configured high-performance B-tree indexes (`email`, `sku`, `category_id`, `product_id`, `user_id`, `order_id`, `status`).
 
 ### [2026-10-01] — Phase 2: Architecture Design Completed
 - **Status:** Completed
 - **Deliverables:**
   - Created System Architecture document in [`docs/architecture.md`](file:///run/media/rinos/Data/store.io/docs/architecture.md).
-  - Modeled System Topology (React $\rightarrow$ Node.js BFF $\rightarrow$ 6 Spring Boot Services $\rightarrow$ MySQL DB per service).
-  - Modeled Security & Authentication Architecture (Stateless JWT token issuance, verification, header enrichment `X-User-Id`, `X-User-Roles`).
-  - Designed Orchestrated Saga pattern for Checkout transaction flow (Cart $\rightarrow$ Order $\rightarrow$ Inventory Reserve $\rightarrow$ Payment $\rightarrow$ Stock Release on failure).
-  - Established API error response standard (RFC 7807 Problem Details).
 
 ### [2026-10-01] — Phase 1: Requirements Analysis Completed
 - **Status:** Completed
 - **Deliverables:**
   - Root repository README initialized with architecture diagrams, stack overview, and roadmap.
-  - Comprehensive System Requirements Specification created at [`docs/requirements.md`](file:///run/media/rinos/Data/store.io/docs/requirements.md).
-  - Defined functional bounds for 6 initial microservices (`user-service`, `product-service`, `inventory-service`, `cart-service`, `order-service`, `payment-service`).
-  - Defined Non-Functional Requirements (Security, Performance, Concurrency, Isolation).
-  - Drafted Edge Cases & Risk Mitigation Matrix (Flash sale concurrency, Price snapshotting, Payment failures).
+  - System Requirements Specification created at [`docs/requirements.md`](file:///run/media/rinos/Data/store.io/docs/requirements.md).
 
 ---
 
@@ -58,7 +55,7 @@ This log tracks completed phases, decisions made, and upcoming milestones for th
 | **Phase 1** | Requirements Analysis | 🟢 Completed |
 | **Phase 2** | Architecture Design | 🟢 Completed |
 | **Phase 3** | Database Design | 🟢 Completed |
-| **Phase 4** | Backend Development | 🟢 `user-service` Completed / Remaining Services Pending |
+| **Phase 4** | Backend Development | 🟢 `user-service`, `product-service` Completed / Remaining Services Pending |
 | **Phase 5** | Postman Testing | ⚪ Pending |
 | **Phase 6** | Node.js BFF | ⚪ Pending |
 | **Phase 7** | React Frontend | ⚪ Pending |
