@@ -33,7 +33,7 @@ React Frontend
 * **Database:** MySQL (Database-per-Service isolation)
 * **BFF (Backend-For-Frontend):** Node.js, Express.js
 * **Frontend:** React.js, HTML5, CSS3, ES6+ JavaScript
-* **Documentation & Testing:** Postman Collections, RFC 7807 Error Specs, Markdown Docs
+* **Documentation & Testing:** Postman v2.1 Collections, RFC 7807 Error Specs, Markdown Docs
 
 ---
 
@@ -59,6 +59,8 @@ store.io/
 │   ├── api-design.md
 │   └── progress-log.md
 ├── postman/
+│   ├── store.io.postman_collection.json
+│   └── store.io.postman_environment.json
 └── README.md
 ```
 
@@ -70,8 +72,8 @@ store.io/
 - [x] **Phase 2: Architecture Design**
 - [x] **Phase 3: Database Design**
 - [x] **Phase 4: Backend Development**
-- [ ] **Phase 5: Postman Testing** (Current)
-- [ ] **Phase 6: Node.js BFF**
+- [x] **Phase 5: Postman Testing**
+- [ ] **Phase 6: Node.js BFF** (Current)
 - [ ] **Phase 7: React Frontend**
 - [ ] **Phase 8: Dockerization**
 - [ ] **Phase 9: Advanced Microservices Features**
@@ -84,4 +86,5 @@ Detailed project specifications are maintained in the [`docs/`](file:///run/medi
 * [`docs/requirements.md`](file:///run/media/rinos/Data/store.io/docs/requirements.md): System Functional & Non-Functional Requirements.
 * [`docs/architecture.md`](file:///run/media/rinos/Data/store.io/docs/architecture.md): System Architecture, JWT propagation, and Checkout Saga sequence.
 * [`docs/database-design.md`](file:///run/media/rinos/Data/store.io/docs/database-design.md): Database-per-Service ER models & SQL indexing rules.
+* [`docs/api-design.md`](file:///run/media/rinos/Data/store.io/docs/api-design.md): REST API specs, RFC 7807 problem details, and Postman testing guide.
 * [`docs/progress-log.md`](file:///run/media/rinos/Data/store.io/docs/progress-log.md): Implementation step-by-step progress tracking.

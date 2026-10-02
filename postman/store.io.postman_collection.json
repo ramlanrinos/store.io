@@ -1,0 +1,452 @@
+{
+  "info": {
+    "_postman_id": "storeio-collection-id",
+    "name": "store.io Microservices API Collection",
+    "description": "Production Postman API Collection for store.io e-commerce microservices platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. User Service (Port 8081)",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_user}}/users/register",
+              "host": ["{{baseUrl_user}}"],
+              "path": ["users", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set(\"jwt_token\", jsonData.token);",
+                  "    pm.environment.set(\"userId\", jsonData.userId);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_user}}/users/login",
+              "host": ["{{baseUrl_user}}"],
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl_user}}/users/profile",
+              "host": ["{{baseUrl_user}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Validate JWT Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_user}}/users/validate?token={{jwt_token}}",
+              "host": ["{{baseUrl_user}}"],
+              "path": ["users", "validate"],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Product Service (Port 8082)",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics\",\n  \"slug\": \"electronics\",\n  \"description\": \"Gadgets & Electronics\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_product}}/categories",
+              "host": ["{{baseUrl_product}}"],
+              "path": ["categories"]
+            }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 1,\n  \"name\": \"Wireless Noise-Canceling Headphones\",\n  \"sku\": \"AUD-HEAD-001\",\n  \"description\": \"Premium Bluetooth headphones\",\n  \"price\": 299.99\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_product}}/products",
+              "host": ["{{baseUrl_product}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Get Products (Search & Filter)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_product}}/products?page=0&size=10",
+              "host": ["{{baseUrl_product}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Batch Product Lookup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productIds\": [1]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_product}}/products/batch",
+              "host": ["{{baseUrl_product}}"],
+              "path": ["products", "batch"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Inventory Service (Port 8083)",
+      "item": [
+        {
+          "name": "Restock Product Inventory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"sku\": \"AUD-HEAD-001\",\n  \"quantity\": 100,\n  \"reason\": \"Initial Warehouse Restock\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_inventory}}/inventory/restock",
+              "host": ["{{baseUrl_inventory}}"],
+              "path": ["inventory", "restock"]
+            }
+          }
+        },
+        {
+          "name": "Get Inventory Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_inventory}}/inventory/{{productId}}",
+              "host": ["{{baseUrl_inventory}}"],
+              "path": ["inventory", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Reserve Stock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderNumber\": \"ORD-20261002-1001\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_inventory}}/inventory/reserve",
+              "host": ["{{baseUrl_inventory}}"],
+              "path": ["inventory", "reserve"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Cart Service (Port 8084)",
+      "item": [
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_cart}}/carts/{{userId}}/items",
+              "host": ["{{baseUrl_cart}}"],
+              "path": ["carts", "{{userId}}", "items"]
+            }
+          }
+        },
+        {
+          "name": "Get User Cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_cart}}/carts/{{userId}}",
+              "host": ["{{baseUrl_cart}}"],
+              "path": ["carts", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_cart}}/carts/{{userId}}",
+              "host": ["{{baseUrl_cart}}"],
+              "path": ["carts", "{{userId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Order Service (Port 8085)",
+      "item": [
+        {
+          "name": "Create Pending Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.id) {",
+                  "    pm.environment.set(\"orderId\", jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{userId}},\n  \"shippingAddress\": \"123 Broadway St, New York, NY 10001\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"productName\": \"Wireless Noise-Canceling Headphones\",\n      \"priceSnapshot\": 299.99,\n      \"quantity\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_order}}/orders",
+              "host": ["{{baseUrl_order}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_order}}/orders/{{orderId}}",
+              "host": ["{{baseUrl_order}}"],
+              "path": ["orders", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"PAID\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_order}}/orders/{{orderId}}/status",
+              "host": ["{{baseUrl_order}}"],
+              "path": ["orders", "{{orderId}}", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Payment Service (Port 8086)",
+      "item": [
+        {
+          "name": "Process Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.id) {",
+                  "    pm.environment.set(\"paymentId\", jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": {{orderId}},\n  \"amount\": 599.98,\n  \"paymentMethod\": \"CREDIT_CARD\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_payment}}/payments/process",
+              "host": ["{{baseUrl_payment}}"],
+              "path": ["payments", "process"]
+            }
+          }
+        },
+        {
+          "name": "Get Payment By Order ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_payment}}/payments/order/{{orderId}}",
+              "host": ["{{baseUrl_payment}}"],
+              "path": ["payments", "order", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "Refund Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Customer returned product\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl_payment}}/payments/{{paymentId}}/refund",
+              "host": ["{{baseUrl_payment}}"],
+              "path": ["payments", "{{paymentId}}", "refund"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
