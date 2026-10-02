@@ -17,23 +17,23 @@ React Frontend
       ▼
  Node.js BFF
       │
-      ├──► User / Auth Service      (Spring Boot + MySQL)
-      ├──► Product Catalog Service  (Spring Boot + MySQL)
-      ├──► Inventory Service        (Spring Boot + MySQL)
-      ├──► Cart Service             (Spring Boot + MySQL)
-      ├──► Order Service            (Spring Boot + MySQL)
-      └──► Payment Service          (Spring Boot + MySQL)
+      ├──► User / Auth Service      (Spring Boot + MySQL) [Port 8081]
+      ├──► Product Catalog Service  (Spring Boot + MySQL) [Port 8082]
+      ├──► Inventory Service        (Spring Boot + MySQL) [Port 8083]
+      ├──► Cart Service             (Spring Boot + MySQL) [Port 8084]
+      ├──► Order Service            (Spring Boot + MySQL) [Port 8085]
+      └──► Payment Service          (Spring Boot + MySQL) [Port 8086]
 ```
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Backend Microservices:** Java 17+, Spring Boot 3.x, Spring Data JPA, Spring Security, JWT, Maven
-* **Database:** MySQL (per-service database isolation)
+* **Backend Microservices:** Java 21, Spring Boot 3.2.3, Spring Data JPA, Spring Security, JWT (JJWT 0.12.5), Maven
+* **Database:** MySQL (Database-per-Service isolation)
 * **BFF (Backend-For-Frontend):** Node.js, Express.js
 * **Frontend:** React.js, HTML5, CSS3, ES6+ JavaScript
-* **Documentation & Testing:** Postman, Markdown Docs
+* **Documentation & Testing:** Postman Collections, RFC 7807 Error Specs, Markdown Docs
 
 ---
 
@@ -42,12 +42,12 @@ React Frontend
 ```text
 store.io/
 ├── backend/
-│   ├── user-service/
-│   ├── product-service/
-│   ├── inventory-service/
-│   ├── cart-service/
-│   ├── order-service/
-│   └── payment-service/
+│   ├── user-service/        (Port 8081)
+│   ├── product-service/     (Port 8082)
+│   ├── inventory-service/   (Port 8083)
+│   ├── cart-service/        (Port 8084)
+│   ├── order-service/       (Port 8085)
+│   └── payment-service/     (Port 8086)
 ├── bff/
 │   └── node-bff/
 ├── frontend/
@@ -69,8 +69,8 @@ store.io/
 - [x] **Phase 1: Requirements Analysis**
 - [x] **Phase 2: Architecture Design**
 - [x] **Phase 3: Database Design**
-- [ ] **Phase 4: Backend Development** (Current)
-- [ ] **Phase 5: Postman Testing**
+- [x] **Phase 4: Backend Development**
+- [ ] **Phase 5: Postman Testing** (Current)
 - [ ] **Phase 6: Node.js BFF**
 - [ ] **Phase 7: React Frontend**
 - [ ] **Phase 8: Dockerization**
@@ -83,5 +83,5 @@ store.io/
 Detailed project specifications are maintained in the [`docs/`](file:///run/media/rinos/Data/store.io/docs) directory:
 * [`docs/requirements.md`](file:///run/media/rinos/Data/store.io/docs/requirements.md): System Functional & Non-Functional Requirements.
 * [`docs/architecture.md`](file:///run/media/rinos/Data/store.io/docs/architecture.md): System Architecture, JWT propagation, and Checkout Saga sequence.
-* [`docs/database-design.md`](file:///run/media/rinos/Data/store.io/docs/database-design.md): Normalized Database-per-Service ER models & SQL indexing rules.
+* [`docs/database-design.md`](file:///run/media/rinos/Data/store.io/docs/database-design.md): Database-per-Service ER models & SQL indexing rules.
 * [`docs/progress-log.md`](file:///run/media/rinos/Data/store.io/docs/progress-log.md): Implementation step-by-step progress tracking.
