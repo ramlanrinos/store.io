@@ -12,10 +12,10 @@
 ## 🏛️ High-Level Architecture
 
 ```text
-React Frontend
+React Frontend (Port 3000)
       │
       ▼
- Node.js BFF
+ Node.js BFF (Port 5000)
       │
       ├──► User / Auth Service      (Spring Boot + MySQL) [Port 8081]
       ├──► Product Catalog Service  (Spring Boot + MySQL) [Port 8082]
@@ -31,7 +31,7 @@ React Frontend
 
 * **Backend Microservices:** Java 21, Spring Boot 3.2.3, Spring Data JPA, Spring Security, JWT (JJWT 0.12.5), Maven
 * **Database:** MySQL (Database-per-Service isolation)
-* **BFF (Backend-For-Frontend):** Node.js, Express.js
+* **BFF (Backend-For-Frontend):** Node.js 18+, Express.js, Axios, JWT verification
 * **Frontend:** React.js, HTML5, CSS3, ES6+ JavaScript
 * **Documentation & Testing:** Postman v2.1 Collections, RFC 7807 Error Specs, Markdown Docs
 
@@ -49,7 +49,7 @@ store.io/
 │   ├── order-service/       (Port 8085)
 │   └── payment-service/     (Port 8086)
 ├── bff/
-│   └── node-bff/
+│   └── node-bff/            (Port 5000)
 ├── frontend/
 │   └── react-app/
 ├── docs/
@@ -73,8 +73,8 @@ store.io/
 - [x] **Phase 3: Database Design**
 - [x] **Phase 4: Backend Development**
 - [x] **Phase 5: Postman Testing**
-- [ ] **Phase 6: Node.js BFF** (Current)
-- [ ] **Phase 7: React Frontend**
+- [x] **Phase 6: Node.js BFF**
+- [ ] **Phase 7: React Frontend** (Current)
 - [ ] **Phase 8: Dockerization**
 - [ ] **Phase 9: Advanced Microservices Features**
 
