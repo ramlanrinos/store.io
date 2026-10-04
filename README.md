@@ -32,7 +32,7 @@ React Frontend (Port 3000)
 * **Backend Microservices:** Java 21, Spring Boot 3.2.3, Spring Data JPA, Spring Security, JWT (JJWT 0.12.5), Maven
 * **Database:** MySQL (Database-per-Service isolation)
 * **BFF (Backend-For-Frontend):** Node.js 18+, Express.js, Axios, JWT verification
-* **Frontend:** React.js, HTML5, CSS3, ES6+ JavaScript
+* **Frontend:** React.js 18, React Router v6, Lucide Icons, Context API, Axios
 * **Documentation & Testing:** Postman v2.1 Collections, RFC 7807 Error Specs, Markdown Docs
 
 ---
@@ -51,7 +51,7 @@ store.io/
 ├── bff/
 │   └── node-bff/            (Port 5000)
 ├── frontend/
-│   └── react-app/
+│   └── react-app/           (Port 3000)
 ├── docs/
 │   ├── requirements.md
 │   ├── architecture.md
@@ -74,8 +74,8 @@ store.io/
 - [x] **Phase 4: Backend Development**
 - [x] **Phase 5: Postman Testing**
 - [x] **Phase 6: Node.js BFF**
-- [ ] **Phase 7: React Frontend** (Current)
-- [ ] **Phase 8: Dockerization**
+- [x] **Phase 7: React Frontend**
+- [ ] **Phase 8: Dockerization** (Current)
 - [ ] **Phase 9: Advanced Microservices Features**
 
 ---
