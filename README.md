@@ -75,8 +75,30 @@ store.io/
 - [x] **Phase 5: Postman Testing**
 - [x] **Phase 6: Node.js BFF**
 - [x] **Phase 7: React Frontend**
-- [ ] **Phase 8: Dockerization** (Current)
-- [ ] **Phase 9: Advanced Microservices Features**
+- [x] **Phase 8: Dockerization**
+- [ ] **Phase 9: Advanced Microservices Features** (Next Up)
+
+---
+
+## 🚀 Running with Docker Compose
+
+You can launch the entire `store.io` platform (MySQL database, 6 backend microservices, Node.js BFF Gateway, and React Frontend) with a single command:
+
+```bash
+docker-compose up --build -d
+```
+
+### Access Points:
+- **React Frontend SPA:** `http://localhost:3000`
+- **Node.js BFF Gateway:** `http://localhost:5000/api`
+- **MySQL Database:** `localhost:3306` (Root Password: `rootpassword`)
+- **Backend Microservices:**
+  - `user-service`: `http://localhost:8081`
+  - `product-service`: `http://localhost:8082`
+  - `inventory-service`: `http://localhost:8083`
+  - `cart-service`: `http://localhost:8084`
+  - `order-service`: `http://localhost:8085`
+  - `payment-service`: `http://localhost:8086`
 
 ---
 

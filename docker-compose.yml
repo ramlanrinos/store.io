@@ -1,0 +1,174 @@
+version: '3.8'
+
+networks:
+  storeio-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
+services:
+  # Central Database Container
+  mysql-db:
+    image: mysql:8.0
+    container_name: storeio-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - storeio-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Microservices
+  user-service:
+    build:
+      context: ./backend/user-service
+      dockerfile: Dockerfile
+    container_name: storeio-user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/user_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      JWT_SECRET: 9a4f2c8d7e1b5a3f8c6d4e2b0a1f9e8d7c5b3a1f4e2d0c9b8a7f6e5d4c3b2a1f
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  product-service:
+    build:
+      context: ./backend/product-service
+      dockerfile: Dockerfile
+    container_name: storeio-product-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/product_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  inventory-service:
+    build:
+      context: ./backend/inventory-service
+      dockerfile: Dockerfile
+    container_name: storeio-inventory-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/inventory_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  cart-service:
+    build:
+      context: ./backend/cart-service
+      dockerfile: Dockerfile
+    container_name: storeio-cart-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/cart_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  order-service:
+    build:
+      context: ./backend/order-service
+      dockerfile: Dockerfile
+    container_name: storeio-order-service
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/order_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  payment-service:
+    build:
+      context: ./backend/payment-service
+      dockerfile: Dockerfile
+    container_name: storeio-payment-service
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/payment_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - storeio-network
+
+  # Node.js BFF Gateway
+  node-bff:
+    build:
+      context: ./bff/node-bff
+      dockerfile: Dockerfile
+    container_name: storeio-node-bff
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      JWT_SECRET: 9a4f2c8d7e1b5a3f8c6d4e2b0a1f9e8d7c5b3a1f4e2d0c9b8a7f6e5d4c3b2a1f
+      USER_SERVICE_URL: http://user-service:8081
+      PRODUCT_SERVICE_URL: http://product-service:8082
+      INVENTORY_SERVICE_URL: http://inventory-service:8083
+      CART_SERVICE_URL: http://cart-service:8084
+      ORDER_SERVICE_URL: http://order-service:8085
+      PAYMENT_SERVICE_URL: http://payment-service:8086
+    depends_on:
+      - user-service
+      - product-service
+      - inventory-service
+      - cart-service
+      - order-service
+      - payment-service
+    networks:
+      - storeio-network
+
+  # React Frontend Web App
+  react-frontend:
+    build:
+      context: ./frontend/react-app
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BFF_URL: http://localhost:5000/api
+    container_name: storeio-react-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - node-bff
+    networks:
+      - storeio-network
